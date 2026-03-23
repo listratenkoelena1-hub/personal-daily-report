@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1"
+  />
+  <title>Personal Daily Report</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- AUTH SCREEN -->
+  <section id="authScreen">
+
+    <h1>Personal Daily Report</h1>
+
+    <input id="authEmail" type="email" placeholder="Email" />
+
+    <input id="authPassword" type="password" placeholder="Password" />
+
+    <div id="confirmWrap" style="display:none;">
+      <input id="authConfirmPassword" type="password" placeholder="Confirm password" />
+    </div>
+
+    <button id="authSubmitBtn">Sign in</button>
+
+    <button id="toggleModeBtn">Create account</button>
+
+    <button id="forgotPasswordBtn">Forgot password</button>
+
+    <p id="authMessage"></p>
+
+  </section>
+
+
+  <!-- MAIN SCREEN -->
+  <section id="mainScreen" style="display:none;">
+
+    <!-- TOP BAR -->
+    <div>
+
+      <!-- LEFT -->
+      <button id="logoutBtn">↪</button>
+
+      <!-- RIGHT -->
+      <button id="prevDayBtn">‹</button>
+
+      <span id="selectedDate">Wednesday, Mar 18</span>
+
+      <button id="nextDayBtn">›</button>
+
+    </div>
+
+
+    <!-- DAILY REPORT -->
+    <h2>Daily Report</h2>
+
+    <div>
+
+      <button id="addEntryBtn">+ Add entry</button>
+
+      <div>
+        <span>#</span>
+        <span>Service</span>
+        <span>Tips</span>
+      </div>
+
+      <div id="entriesContainer">
+        <p id="noEntries">No entries yet</p>
+      </div>
+
+    </div>
+
+
+    <!-- TOTALS -->
+    <div>
+      <div>
+        <span>Service today:</span>
+        <span id="serviceToday">0.00</span>
+      </div>
+
+      <div>
+        <span>Tips today:</span>
+        <span id="tipsToday">0.00</span>
+      </div>
+    </div>
+
+
+    <!-- ANALYTICS -->
+    <h2>Analytics</h2>
+
+    <button id="selectPeriodBtn">Select period</button>
+
+    <div>
+      <button id="summaryBtn">Summary</button>
+      <button id="detailsBtn">Details</button>
+      <button id="chartBtn">Chart</button>
+    </div>
+
+    <div id="analyticsResult">
+      <p>Select period to see analytics</p>
+    </div>
+
+  </section>
+
+
+  <!-- JS -->
+  <script src="app.js"></script>
+
+</body>
+</html>
