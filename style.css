@@ -1,0 +1,148 @@
+/* ===== RESET ===== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ===== BASE ===== */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: #f6f7f9;
+  color: #111;
+  display: flex;
+  justify-content: center;
+}
+
+/* Ограничиваем ширину под мобильный */
+#authScreen,
+#mainScreen {
+  width: 100%;
+  max-width: 420px;
+  padding: 16px;
+}
+
+/* ===== AUTH ===== */
+#authScreen {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+#authScreen h1 {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+#authScreen input {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+#authScreen button {
+  padding: 10px;
+  border: none;
+  background: #111;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+#authScreen button:nth-of-type(2),
+#authScreen button:nth-of-type(3) {
+  background: transparent;
+  color: #666;
+}
+
+#authMessage {
+  font-size: 14px;
+  color: red;
+}
+
+/* ===== MAIN ===== */
+#mainScreen {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* TOP BAR */
+#mainScreen > div:first-child {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#selectedDate {
+  font-size: 14px;
+}
+
+/* ===== CARDS ===== */
+#mainScreen > div:nth-of-type(2) {
+  background: white;
+  padding: 12px;
+  border-radius: 12px;
+}
+
+/* ADD ENTRY */
+#addEntryBtn {
+  background: transparent;
+  border: none;
+  color: #007aff;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+/* TABLE HEAD */
+#mainScreen > div:nth-of-type(2) > div:nth-of-type(2) {
+  display: grid;
+  grid-template-columns: 40px 1fr 1fr;
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 6px;
+}
+
+/* ENTRIES */
+#entriesContainer {
+  min-height: 40px;
+}
+
+#entriesContainer p {
+  color: #aaa;
+  font-size: 14px;
+}
+
+/* ===== TOTALS ===== */
+#mainScreen > div:nth-of-type(3) {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+}
+
+/* ===== ANALYTICS ===== */
+#mainScreen > div:nth-of-type(5) {
+  display: flex;
+  gap: 10px;
+}
+
+#mainScreen > div:nth-of-type(5) button {
+  flex: 1;
+  padding: 6px;
+  border-radius: 8px;
+  border: none;
+  background: #eee;
+  cursor: pointer;
+}
+
+/* ANALYTICS RESULT */
+#analyticsResult {
+  background: white;
+  padding: 12px;
+  border-radius: 12px;
+  min-height: 80px;
+  font-size: 14px;
+  color: #888;
+}
