@@ -22,7 +22,9 @@ const authMessage = document.getElementById("authMessage");
 
 // Main
 const logoutBtn = document.getElementById("logoutBtn");
-
+// Totals elements
+const serviceTodayEl = document.getElementById("serviceToday");
+const tipsTodayEl = document.getElementById("tipsToday");
 // ===== INIT =====
 
 // Проверяем localStorage при загрузке
@@ -245,6 +247,7 @@ function renderEntries() {
 
     entriesContainer.appendChild(row);
   }
+    updateTotals();
 }
 
 // ===== ADD ENTRY =====
@@ -258,3 +261,17 @@ addEntryBtn.addEventListener("click", () => {
 
 // первый рендер
 renderEntries();
+// ===== TOTALS =====
+
+function updateTotals() {
+  let serviceSum = 0;
+  let tipsSum = 0;
+
+  entries.forEach((entry) => {
+    serviceSum += entry.service;
+    tipsSum += entry.tips;
+  });
+
+  serviceTodayEl.textContent = serviceSum.toFixed(2);
+  tipsTodayEl.textContent = tipsSum.toFixed(2);
+}
