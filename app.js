@@ -1,3 +1,24 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+// ===== FIREBASE CONFIG =====
+
+const firebaseConfig = {
+  apiKey: "AIzaSyD7tj0EIwZEqcKzHZS9a9EjtCoKsVbLMoc",
+  authDomain: "personal-daily-report.firebaseapp.com",
+  projectId: "personal-daily-report",
+  storageBucket: "personal-daily-report.firebasestorage.app",
+  messagingSenderId: "926361916428",
+  appId: "1:926361916428:web:74e4ba094b7716d9cc4a29"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 // ===== STATE =====
 let isLoginMode = true;
 let currentUser = null;
@@ -28,13 +49,12 @@ const tipsTodayEl = document.getElementById("tipsToday");
 // ===== INIT =====
 
 // Проверяем localStorage при загрузке
-window.addEventListener("load", () => {
-  const savedUser = localStorage.getItem("user");
-
-  if (savedUser) {
-    currentUser = JSON.parse(savedUser);
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    currentUser = user;
     showMain();
   } else {
+    currentUser = null;
     showAuth();
   }
 });
@@ -93,46 +113,26 @@ authSubmitBtn.addEventListener("click", () => {
   }
 });
 
-// ===== FAKE AUTH (ПОКА БЕЗ FIREBASE) =====
-
-function register(email, password) {
-  const user = {
-    email,
-    password,
-  };
-
-  localStorage.setItem("user", JSON.stringify(user));
-  currentUser = user;
-
-  showMain();
+// =====  AUTH (FIREBASE) =====
+async function register(email, password) {
+  try {
+    await createUserWithEmailAndPassword(auth, email, password);
+  } catch (error) {
+    authMessage.textContent = error.message;
+  }
 }
 
-function login(email, password) {
-  const savedUser = localStorage.getItem("user");
-
-  if (!savedUser) {
-    authMessage.textContent = "User not found";
-    return;
+async function login(email, password) {
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+  } catch (error) {
+    authMessage.textContent = error.message;
   }
-
-  const user = JSON.parse(savedUser);
-
-  if (user.email !== email || user.password !== password) {
-    authMessage.textContent = "Wrong email or password";
-    return;
-  }
-
-  currentUser = user;
-  showMain();
 }
-
 // ===== LOGOUT =====
 
-logoutBtn.addEventListener("click", () => {
-  localStorage.removeItem("user");
-  currentUser = null;
-
-  showAuth();
+logoutBtn.addEventListener("click", async () => {
+  await signOut(auth);
 });
 
 // ===== FORGOT PASSWORD (ПОКА ПРОСТО ЗАГЛУШКА) =====
