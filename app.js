@@ -275,3 +275,140 @@ function updateTotals() {
   serviceTodayEl.textContent = serviceSum.toFixed(2);
   tipsTodayEl.textContent = tipsSum.toFixed(2);
 }
+// ===== ANALYTICS =====
+
+let analyticsMode = "summary";
+let periodSelected = false;
+
+// элементы
+const summaryBtn = document.getElementById("summaryBtn");
+const detailsBtn = document.getElementById("detailsBtn");
+const chartBtn = document.getElementById("chartBtn");
+
+const selectPeriodBtn = document.getElementById("selectPeriodBtn");
+
+const analyticsResult = document.getElementById("analyticsResult");
+
+const summaryView = document.getElementById("summaryView");
+const detailsView = document.getElementById("detailsView");
+const chartView = document.getElementById("chartView");
+
+const analyticsPlaceholder = document.getElementById("analyticsPlaceholder");
+
+// summary элементы
+const summaryServiceTotalValue = document.getElementById("summaryServiceTotalValue");
+const summaryTipsTotalValue = document.getElementById("summaryTipsTotalValue");
+const summaryAveragePerDayValue = document.getElementById("summaryAveragePerDayValue");
+const summaryBestDayDate = document.getElementById("summaryBestDayDate");
+const summaryBestDayAmount = document.getElementById("summaryBestDayAmount");
+
+// details
+const detailsContent = document.getElementById("detailsContent");
+
+// ===== MODE SWITCH =====
+
+summaryBtn.addEventListener("click", () => {
+  analyticsMode = "summary";
+  updateAnalyticsUI();
+});
+
+detailsBtn.addEventListener("click", () => {
+  analyticsMode = "details";
+  updateAnalyticsUI();
+});
+
+chartBtn.addEventListener("click", () => {
+  analyticsMode = "chart";
+  updateAnalyticsUI();
+});
+
+// ===== PERIOD (ПРОСТО АКТИВАЦИЯ ПОКА) =====
+
+selectPeriodBtn.addEventListener("click", () => {
+  periodSelected = true;
+  updateAnalyticsUI();
+});
+
+// ===== MAIN UPDATE =====
+
+function updateAnalyticsUI() {
+  // reset views
+  summaryView.style.display = "none";
+  detailsView.style.display = "none";
+  chartView.style.display = "none";
+  analyticsPlaceholder.style.display = "none";
+
+  if (!periodSelected) {
+    analyticsPlaceholder.textContent = "Select period to see analytics";
+    analyticsPlaceholder.style.display = "block";
+    return;
+  }
+
+  if (entries.length === 0) {
+    analyticsPlaceholder.textContent = "No data for selected period";
+    analyticsPlaceholder.style.display = "block";
+    return;
+  }
+
+  if (analyticsMode === "summary") {
+    renderSummary();
+    summaryView.style.display = "block";
+  }
+
+  if (analyticsMode === "details") {
+    renderDetails();
+    detailsView.style.display = "block";
+  }
+
+  if (analyticsMode === "chart") {
+    analyticsPlaceholder.textContent = "Chart will be added later";
+    analyticsPlaceholder.style.display = "block";
+  }
+}
+
+// ===== SUMMARY =====
+
+function renderSummary() {
+  let serviceTotal = 0;
+  let tipsTotal = 0;
+
+  entries.forEach((e) => {
+    serviceTotal += e.service;
+    tipsTotal += e.tips;
+  });
+
+  const days = 1; // пока один день
+  const avg = (serviceTotal + tipsTotal) / days;
+
+  summaryServiceTotalValue.textContent = serviceTotal.toFixed(2);
+  summaryTipsTotalValue.textContent = tipsTotal.toFixed(2);
+  summaryAveragePerDayValue.textContent = avg.toFixed(2);
+
+  summaryBestDayDate.textContent = "Today";
+  summaryBestDayAmount.textContent = (serviceTotal + tipsTotal).toFixed(2);
+}
+
+// ===== DETAILS =====
+
+function renderDetails() {
+  detailsContent.innerHTML = "";
+
+  entries.forEach((e, i) => {
+    const row = document.createElement("div");
+    row.style.display = "flex";
+    row.style.justifyContent = "space-between";
+    row.style.marginBottom = "6px";
+
+    const left = document.createElement("div");
+    left.textContent = "#" + (i + 1);
+
+    const right = document.createElement("div");
+    right.textContent =
+      e.service.toFixed(2) + " / " + e.tips.toFixed(2);
+
+    row.appendChild(left);
+    row.appendChild(right);
+
+    detailsContent.appendChild(row);
+  });
+}
